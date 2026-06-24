@@ -13,7 +13,8 @@ export default function App() {
     <>
       <Navbar />
       {/* padding-top pour compenser la navbar fixed */}
-      <div style={{ paddingTop: "100px", minHeight: "calc(100vh - 64px)" }}>        <Routes>
+      <div style={{ paddingTop: "72px" }}>
+        <Routes>
           <Route path="/" element={<Home />} /> 
           <Route path="/associations" element={<Associations />} /> 
           <Route path="/events" element={<Events />} />

@@ -7,7 +7,7 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-white shadow z-50">
-      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div className="max-w-8xl mx-auto px-6 py-3 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3">
           <img src="/images/MZIWDA_logo_clean-removebg-preview.png" alt="MZIWDA" className="h-10" />
         </Link>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -68,3 +69,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+=======
+# MZIWDA
+VolunteerHub is a web-based platform designed to facilitate volunteer management and charitable organization activities. The system enables volunteers to discover and apply for missions, associations to manage events and campaigns, donors to contribute securely online, and administrators to monitor operations through reporting and management tools.
+>>>>>>> 52df7d35b5230eac9aea99af1c30315a2c2a9f46

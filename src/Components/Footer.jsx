@@ -10,7 +10,7 @@ export default function Footer({ onLanguageChange, currentLang }) {
   ];
 
   return (
-    <footer className="bg-white border-t border-gray-100 shadow-inner mt-16">
+    <footer className="bg-white border-t border-gray-100 shadow-inner">
       <div className="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {/* Column 1 — Brand */}
         <div>
