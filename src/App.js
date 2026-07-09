@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import Donation from "./Components/Donation";
 import Footer from "./Components/Footer";
+import AuthPage from "./pages/AuthPage";
 
 // Importe tes autres pages ici
 import Home from "./pages/Home";
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="/associations" element={<Associations />} /> 
           <Route path="/events" element={<Events />} />
           <Route path="/donation" element={<Donation />} />
+          <Route path="/login" element={<AuthPage />} />
         </Routes>
       </div>
       <Footer />

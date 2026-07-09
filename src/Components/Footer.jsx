@@ -67,10 +67,15 @@ export default function Footer({ onLanguageChange, currentLang }) {
           <h3 className="text-lg font-semibold text-green-800 mb-4">
             Espace Utilisateur
           </h3>
+          <div className="mb-4">
+            <Link
+              to="/login"
+              className="inline-flex items-center gap-1 text-sm font-semibold text-green-700 underline underline-offset-4 decoration-2 hover:text-green-600 hover:decoration-green-600 transition-colors"
+            >
+              Connexion
+            </Link>
+          </div>
           <ul className="space-y-2 text-sm text-gray-600">
-            <li>
-              <Link to="/login" className="hover:text-green-600">Connexion</Link>
-            </li>
             <li>
               <Link to="/register" className="hover:text-green-600">Inscription bénévole</Link>
             </li>

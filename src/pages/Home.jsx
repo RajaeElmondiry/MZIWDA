@@ -16,12 +16,6 @@ const events = [
   { title: "Campagne médicale gratuite – Rabat", date: "22 juillet 2025", spots: 5, category: "Santé", catColor: { bg: "#e6f1fb", color: "#185FA5" } },
 ];
 
-const steps = [
-  { title: "Créez votre profil", desc: "Inscrivez-vous en quelques minutes et précisez vos compétences et disponibilités.", active: false },
-  { title: "Trouvez une mission", desc: "Parcourez les événements et associations selon vos intérêts et votre région.", active: true },
-  { title: "Faites la différence", desc: "Partez à l'action, contribuez, et suivez l'impact de vos actions en temps réel.", active: false },
-];
-
 const associations = [
   {
     name: "Solidarité Maroc",
@@ -91,6 +85,27 @@ function CountUp({ value, duration = 1400 }) {
   return display;
 }
 
+const IconUser = () => (
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M4 21c0-3.31 2.69-6 6-6h4c3.31 0 6 2.69 6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+const IconCompass = () => (
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.8" />
+    <path d="M10.5 7.5l3 1.5 1.5 3-3 1.5-1.5-3-1.5-1.5Z" fill="currentColor" />
+    <path d="M10.5 7.5l3 1.5 1.5 3-3 1.5-1.5-3-1.5-1.5Z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+const IconHeart = () => (
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 20s-5-4.35-8-7.64C2.23 10.12 2.83 6.42 5.5 4.35 7.04 3.14 9.1 3 11 4.03 12.9 3 14.96 3.14 16.5 4.35c2.67 2.07 3.27 5.77 1.5 7.99C17 15.65 12 20 12 20Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
 /* ─────────────────────────────────────────────
    HOME
 ───────────────────────────────────────────── */
@@ -104,24 +119,39 @@ export default function Home() {
     : "Votre générosité change des vies durablement.";
 
   const [hoverIndex, setHoverIndex] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const updateSize = () => setIsMobile(window.innerWidth < 900);
+    updateSize();
+    window.addEventListener("resize", updateSize);
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
+
   const howSteps = [
     {
       number: "01",
       title: "Créez votre profil",
-      desc: "Complétez votre profil, indiquez vos compétences et disponibilités en quelques minutes.",
-      hint: "Commencez votre parcours bénévole",
+      desc: "Quelques informations suffisent pour commencer à recevoir des missions adaptées à vos compétences et à votre disponibilité.",
+      time: "⏱️ 2 minutes",
+      icon: <IconUser />,
+      active: true,
     },
     {
       number: "02",
       title: "Trouvez une mission",
-      desc: "Explorez des missions locales alignées avec vos valeurs et votre emploi du temps.",
-      hint: "Choisissez une action qui vous inspire",
+      desc: "Choisissez une mission près de chez vous qui correspond à vos envies, vos valeurs et votre emploi du temps.",
+      time: "⏱️ Moins d'une minute",
+      icon: <IconCompass />,
+      active: false,
     },
     {
       number: "03",
-      title: "Faites un impact",
-      desc: "Agissez sur le terrain, suivez votre contribution et voyez votre impact réel.",
-      hint: "Passez à l'action et transformez des vies",
+      title: "Passez à l'action",
+      desc: "Rejoignez une association, aidez votre communauté et voyez l'impact concret de votre engagement.",
+      time: "🎉 C'est tout !",
+      icon: <IconHeart />,
+      active: false,
     },
   ];
 
@@ -178,64 +208,64 @@ export default function Home() {
 
       <div style={s.divider} />
 
-      {/* ── COMMENT ÇA MARCHE ── */}
+      {/* ── COMMENCEZ EN 3 ÉTAPES ── */}
       <section style={s.howSection}>
         <div style={s.howHeader}>
-          <p style={s.howSubtitle}>Commencez à aider en quelques minutes seulement</p>
-          <h2 style={s.howTitle}>Comment ça marche</h2>
+          <p style={s.howSubtitle}>Devenir bénévole est simple. Quelques minutes suffisent pour commencer à avoir un impact.</p>
         </div>
 
-        <div style={s.howCardsRow} onMouseLeave={() => setHoverIndex(null)}>
+        <div style={{ ...s.timelineWrapper, flexDirection: isMobile ? "column" : "row" }} onMouseLeave={() => setHoverIndex(null)}>
           {howSteps.flatMap((step, i) => {
             const isHover = hoverIndex === i;
-            const nextActive = hoverIndex === i - 1;
-            const arrowActive = hoverIndex === i || nextActive;
             const card = (
               <div
-                key={`card-${i}`}
+                key={`step-${i}`}
                 onMouseEnter={() => setHoverIndex(i)}
                 onFocus={() => setHoverIndex(i)}
                 onMouseLeave={() => setHoverIndex(null)}
                 style={{
-                  ...s.howCard,
-                  ...(isHover ? s.howCardHover : {}),
-                  borderColor: isHover ? "#236c42" : "rgba(15,20,25,0.08)",
-                  boxShadow: isHover ? s.howCardHover.boxShadow : s.howCard.boxShadow,
+                  ...s.timelineSegment,
+                  ...(step.active ? s.timelineSegmentActive : {}),
+                  ...(isHover ? s.timelineSegmentHover : {}),
                 }}
               >
-                <div style={s.cardIconWrap}>
-                  <div style={{
-                    ...s.cardIcon,
-                    transform: isHover ? "scale(1.1)" : "scale(1)",
-                  }} />
+                <div style={{
+                  ...s.timelineIconWrap,
+                  ...(step.active ? s.timelineIconWrapActive : {}),
+                  transform: isHover ? "scale(1.08)" : "scale(1)",
+                }}>
+                  {step.icon}
                 </div>
-                <div style={s.stepHeader}>
-                  <span style={s.stepNumber}>{step.number}</span>
-                  <h3 style={s.cardTitle}>{step.title}</h3>
+                <div style={s.timelineMeta}>
+                  <span style={s.timelineNumber}>{step.number}</span>
+                  <h3 style={s.timelineTitle}>{step.title}</h3>
+                  <p style={s.timelineDesc}>{step.desc}</p>
                 </div>
-                <p style={s.cardText}>{step.desc}</p>
-                <div style={s.cardHint}>{step.hint} <span style={s.cardHintArrow}>→</span></div>
+                <span style={s.timelineTime}>{step.time}</span>
               </div>
             );
 
             if (i === howSteps.length - 1) return card;
 
             const connector = (
-              <div key={`conn-${i}`} style={s.cardConnector}>
-                <div style={{
-                  ...s.connectorLine,
-                  background: arrowActive ? "linear-gradient(90deg,#236c42,#8ef3c7)" : "rgba(15,20,25,0.08)",
-                }} />
-                <div style={{
-                  ...s.connectorArrow,
-                  transform: arrowActive ? "translateX(6px)" : "translateX(0px)",
-                  opacity: arrowActive ? 1 : 0.5,
-                }}>→</div>
-              </div>
+              <div
+                key={`connector-${i}`}
+                style={{
+                  ...s.timelineConnector,
+                  ...(isMobile ? s.timelineConnectorVertical : {}),
+                }}
+              />
             );
 
             return [card, connector];
           })}
+        </div>
+
+        <div style={s.timelineCTA}>
+          <Link to="/login">
+            <button style={s.btnPrimary}>Créer mon compte gratuitement</button>
+          </Link>
+          <p style={s.timelineCTASecondary}>Aucune expérience requise.</p>
         </div>
       </section>
 
@@ -558,132 +588,142 @@ const s = {
 
   /* HOW IT WORKS */
   howSection: {
-    padding: "48px 32px",
+    padding: "54px 28px",
     background: "linear-gradient(180deg,#f8fdf7 0%,#ffffff 100%)",
-    borderRadius: 24,
+    borderRadius: 28,
     margin: "30px auto",
     maxWidth: 1120,
   },
   howHeader: {
     textAlign: "center",
-    maxWidth: 660,
-    margin: "0 auto 32px",
+    maxWidth: 680,
+    margin: "0 auto 36px",
   },
   howSubtitle: {
     margin: 0,
     color: "#236c42",
-    fontSize: 13,
-    letterSpacing: "1px",
-    textTransform: "uppercase",
-    fontWeight: 800,
+    fontSize: 14,
+    letterSpacing: "0.04em",
+    fontWeight: 700,
   },
   howTitle: {
-    margin: "14px 0 0",
-    fontSize: "clamp(26px, 2.8vw, 34px)",
+    margin: "16px auto 0",
+    fontSize: "clamp(28px, 3vw, 38px)",
     color: "#111",
-    lineHeight: 1.15,
+    lineHeight: 1.12,
     fontWeight: 800,
   },
-  howCardsRow: {
+  timelineWrapper: {
+    maxWidth: 1120,
+    width: "100%",
+    margin: "0 auto",
     display: "flex",
+    gap: 18,
     alignItems: "stretch",
     justifyContent: "space-between",
-    gap: 18,
-    flexWrap: "wrap",
   },
-  howCard: {
+  timelineSegment: {
     flex: "1 1 0",
-    minWidth: 260,
-    minHeight: 360,
-    background: "#fff",
+    minWidth: 280,
     borderRadius: 24,
+    padding: "30px 28px",
+    background: "#fff",
     border: "1px solid rgba(15,20,25,0.08)",
-    padding: 26,
+    boxShadow: "0 20px 50px rgba(15,20,25,0.08)",
+    transition: "transform 260ms ease, box-shadow 260ms ease, border-color 260ms ease, background 260ms ease",
     display: "flex",
     flexDirection: "column",
-    gap: 18,
-    transition: "transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease, background 300ms ease",
-    boxShadow: "0 18px 48px rgba(15,20,25,0.08)",
+    justifyContent: "space-between",
   },
-  howCardHover: {
+  timelineSegmentActive: {
+    background: "rgba(226,247,228,0.9)",
+    borderColor: "rgba(35,108,66,0.24)",
+    boxShadow: "0 24px 60px rgba(35,108,66,0.1)",
+  },
+  timelineSegmentHover: {
+    transform: "translateY(-6px)",
     borderColor: "#236c42",
-    boxShadow: "0 30px 70px rgba(35,108,66,0.15)",
-    background: "#ffffff",
+    boxShadow: "0 26px 70px rgba(35,108,66,0.14)",
   },
-  cardIconWrap: {
-    width: 76,
-    height: 76,
-    borderRadius: 22,
-    background: "rgba(35,108,66,0.06)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  cardIcon: {
-    fontSize: 36,
-    transition: "transform 300ms ease",
-  },
-  stepHeader: {
-    display: "flex",
-    alignItems: "flex-start",
-    gap: 14,
-  },
-  stepNumber: {
-    minWidth: 54,
-    padding: "10px 14px",
-    borderRadius: 16,
+  timelineIconWrap: {
+    width: 64,
+    height: 64,
+    minWidth: 64,
+    borderRadius: 20,
     background: "rgba(35,108,66,0.08)",
     color: "#236c42",
-    fontWeight: 800,
-    fontSize: 14,
+    display: "grid",
+    placeItems: "center",
+    marginBottom: 22,
+    transition: "transform 260ms ease, background 260ms ease, color 260ms ease",
   },
-  cardTitle: {
+  timelineIconWrapActive: {
+    background: "#236c42",
+    color: "#fff",
+  },
+  timelineMeta: {
+    display: "grid",
+    gap: 12,
+  },
+  timelineNumber: {
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 46,
+    height: 46,
+    borderRadius: "50%",
+    background: "rgba(35,108,66,0.08)",
+    color: "#236c42",
+    fontSize: 13,
+    fontWeight: 800,
+    letterSpacing: "0.1em",
+  },
+  timelineTitle: {
     margin: 0,
-    fontSize: 18,
-    lineHeight: 1.3,
+    fontSize: 20,
+    lineHeight: 1.25,
     fontWeight: 800,
     color: "#111",
   },
-  cardText: {
+  timelineDesc: {
     margin: 0,
-    color: "#4a4a4a",
+    color: "#555",
     fontSize: 14,
     lineHeight: 1.75,
-    flex: 1,
+    minHeight: 88,
   },
-  cardHint: {
+  timelineTime: {
+    marginTop: 20,
     fontSize: 13,
+    color: "#3c6b47",
     fontWeight: 700,
-    color: "#236c42",
-    display: "inline-flex",
-    alignItems: "center",
-    gap: 8,
   },
-  cardHintArrow: {
-    display: "inline-block",
-    transition: "transform 300ms ease",
-  },
-  cardConnector: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    minWidth: 60,
-    paddingTop: 18,
-    paddingBottom: 18,
-  },
-  connectorLine: {
-    width: 40,
+  timelineConnector: {
+    width: 60,
     height: 2,
     borderRadius: 999,
     background: "rgba(15,20,25,0.08)",
-    marginBottom: 10,
-    transition: "background 300ms ease",
+    flexShrink: 0,
+    alignSelf: "center",
+    margin: "0 0",
   },
-  connectorArrow: {
-    fontSize: 22,
-    color: "#236c42",
-    transition: "transform 300ms ease, opacity 300ms ease",
+  timelineConnectorVertical: {
+    width: 2,
+    height: 56,
+    margin: "0 auto",
+  },
+  timelineCTA: {
+    marginTop: 36,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 12,
+  },
+  timelineCTASecondary: {
+    margin: 0,
+    color: "#5b6b5a",
+    fontSize: 13,
+    fontWeight: 600,
   },
 
   /* ASSOCIATIONS */

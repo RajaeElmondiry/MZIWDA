@@ -18,6 +18,12 @@ export default function Navbar() {
           <Link to="/associations" className="text-sm text-gray-700 hover:text-green-700">Associations</Link>
           <Link to="/events" className="text-sm text-gray-700 hover:text-green-700">Événements</Link>
           <Link to="/donation" className="text-sm text-gray-700 hover:text-green-700">Faire un don</Link>
+          <Link
+            to="/login"
+            className="rounded-full border border-green-700 bg-green-700 px-4 py-2 text-sm font-semibold text-white hover:bg-green-600"
+          >
+            Connexion
+          </Link>
         </div>
 
         {/* Mobile burger */}
@@ -39,6 +45,13 @@ export default function Navbar() {
           <Link to="/associations" onClick={() => setMenuOpen(false)} className="text-sm text-gray-700 hover:text-green-700">Associations</Link>
           <Link to="/events" onClick={() => setMenuOpen(false)} className="text-sm text-gray-700 hover:text-green-700">Événements</Link>
           <Link to="/donation" onClick={() => setMenuOpen(false)} className="text-sm text-gray-700 hover:text-green-700">Faire un don</Link>
+          <Link
+            to="/login"
+            onClick={() => setMenuOpen(false)}
+            className="rounded-full border border-green-700 bg-green-700 px-4 py-2 text-sm font-semibold text-white hover:bg-green-600"
+          >
+            Connexion
+          </Link>
         </div>
       )}
     </nav>
